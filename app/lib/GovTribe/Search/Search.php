@@ -116,8 +116,7 @@ class Search
 
 		$data = $index->search($boolQuery);
 
-		d($data);
-
+		return $data;
 	}
 
 }
