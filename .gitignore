@@ -1,3 +1,4 @@
+/app/config/elastica.php
 /bootstrap/compiled.php
 /vendor
 composer.phar
