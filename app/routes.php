@@ -15,11 +15,3 @@ Route::get('/', function()
 {
 	return View::make('home');
 });
-
-App::bind('search', function($app)
-{
-	$client = new \Elastica\Client(array(
-		'url' => Config::get('elastica.uri'),
-	));
-	return $client;
-});

@@ -110,6 +110,9 @@ return array(
 		//3rd Party
 		'Barryvdh\Debugbar\ServiceProvider',
 		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
+
+		//GovTribe
+		'GovTribe\Search\SearchServiceProvider',
 	),
 
 	/*
@@ -176,6 +179,8 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 
+		//GovTribe
+		'Search'          => 'GovTribe\Search\Facades\Search',
 	),
 
 );
