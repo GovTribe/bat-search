@@ -1,4 +1,4 @@
 bat-search
 ==========
 
-Business analytics toolkit search feature
+Business analytics toolkit search capability.
