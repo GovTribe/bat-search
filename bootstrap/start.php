@@ -24,11 +24,10 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(array(
-
-	'local' => array('your-machine-name'),
-
-));
+$env = $app->detectEnvironment(function()
+{
+	if (str_contains(gethostname(), 'local')) return 'local';
+});
 
 /*
 |--------------------------------------------------------------------------

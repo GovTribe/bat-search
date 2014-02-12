@@ -1,0 +1,6 @@
+{
+	"name": "bat-search",
+	"dependencies": {
+		"font-awesome": "*"
+	}
+}

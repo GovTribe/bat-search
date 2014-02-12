@@ -65,7 +65,7 @@ return array(
 	|
 	*/
 
-	'key' => 'YourSecretKey!!!',
+	'key' => '',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -106,6 +106,10 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+
+		//3rd Party
+		'Barryvdh\Debugbar\ServiceProvider',
+		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
 
 	),
 
