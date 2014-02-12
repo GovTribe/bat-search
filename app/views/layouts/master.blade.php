@@ -6,7 +6,6 @@
 </head>	
 	<body>
 	<div class="container-fluid">
-		@include('navbar')
 		@yield('content')
 	</div>
 	@include('footer')

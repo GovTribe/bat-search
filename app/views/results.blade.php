@@ -1,35 +1,25 @@
-<ul class="list-group">
-	<li class="list-group-item">Solicitation A
-		<div class="well">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Awarded</th>
-						<th>Title</th>
-						<th>Vendor</th>
-						<th>POC</th>
-						<th>Synopsis</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Jan 1 2014</td>
-						<td>Gimbal UAV Camera</td>
-						<td>XYZ Corp.</td>
-						<td>
-							<ul class="clearfix list-unstyled">
-								<li>Charlene Booth,</li>
-								<li>Contract Specialist</li>
-								<li>charlene.booth@rl.af.mil</li>
-								<li>315-330-3536</li>
-							</ul>
-						</td>
-						<td>Pan and Tilt Camera (400 and 90 degrees respectively)</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</li>
-	<li class="list-group-item">Solicitation B</li>
-	<li class="list-group-item">Solicitation C</li>
-</ul>
+<table class="table table-hover">
+	<tbody>
+		<tr>
+			<td>(agency logo)</td>
+			<td>Aerial HydroSeeding Service</td>
+			<td>John Smith<br>
+				Contracting Officer<br>
+				+1 (202) 555-5555<br>
+				jsmith@government.gov</td>
+			<td>Awarded Vendors:<br>
+				Seed Tech Industries<br>
+				Microjoint Inc.</td>
+		</tr>
+		<tr>
+			<td>(agency logo)</td>
+			<td>Replacement Covers for Missle Silos</td>
+			<td>Mary Government<br>
+				Purchasing Agent<br>
+				mary.gov@government.gov</td>
+			<td>Awarded Vendors:<br>
+				Bifferton Corp.<br>
+				Louis Systems International</td>
+		</tr>
+	</tbody>
+</table>
