@@ -1,0 +1,10 @@
+/app/config/elastica.php
+/app/assets/components
+/bootstrap/compiled.php
+/vendor
+composer.phar
+composer.lock
+.env.local.php
+.env.php
+.DS_Store
+Thumbs.db
