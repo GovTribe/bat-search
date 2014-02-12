@@ -110,7 +110,6 @@ return array(
 		//3rd Party
 		'Barryvdh\Debugbar\ServiceProvider',
 		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
-
 	),
 
 	/*
