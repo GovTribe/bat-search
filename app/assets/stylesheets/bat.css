@@ -1,0 +1,157 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 50px;
+  background-color: #f5f5f5;
+}
+
+/* Results table styles
+-------------------------------------------------- */
+.table-no-border>thead>tr>th, 
+.table-no-border>tbody>tr>th, 
+.table-no-border>tfoot>tr>th, 
+.table-no-border>thead>tr>td, 
+.table-no-border>tbody>tr>td, 
+.table-no-border>tfoot>tr>td {
+  border-top: none; 
+}
+
+.results-table .no-results {
+	color: #ccc;
+}
+
+.results-table .no-results:hover {
+	background-color: inherit;
+}
+
+
+/*widget*/
+
+.user-heading.alt {
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    padding: 30px;
+}
+
+.alt.green-bg {
+    background: #aec785;
+}
+
+.profile-nav.alt.green-border ul > li > a:hover, .profile-nav.alt.green-border ul > li > a:focus, .profile-nav.alt.green-border ul li.active a {
+    border-left: 5px solid #aec785;
+}
+
+.user-heading.alt a {
+    float: left;
+    margin-right: 15px;
+    margin-left: -10px;
+    display: inline-block;
+}
+
+/*.user-heading.alt a img{
+    width: 100px;
+    height: 100px;
+}*/
+
+.twt-feed {
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    color: #FFFFFF;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+}
+
+.twt-feed.blue-bg {
+    background: #58C9F3;
+}
+
+.twt-feed h1 {
+    font-size: 22px;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.twt-feed a  {
+    border: 8px solid #fff;
+    border-radius: 50%;
+    -webit-border-radius: 50%;
+    display: inline-block;
+    margin-bottom: -55px;
+}
+
+.twt-feed a img {
+    height: 112px;
+    width: 112px;
+    border-radius: 50%;
+    -webit-border-radius: 50%;
+}
+
+.twt-category {
+    display: inline-block;
+    margin-bottom: 11px;
+    margin-top: 55px;
+    width: 100%;
+}
+
+
+.twt-category ul li{
+    color: #89817f;
+    font-size: 13px;
+}
+
+.twt-category h5  {
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.twt-write .t-text-area {
+    border: 1px solid #eeeeee;
+    border-radius: 0;
+}
+
+.twt-footer {
+    padding: 10px 15px;
+}
+
+.btn-space {
+    padding-left: 11.6%;
+    padding-right: 11%;
+}
+
+.p-head {
+    color: #f77b6f;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.cmt-head {
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.p-thumb img {
+    width: 50px;
+    height: 50px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.tasi-tab .media-body p {
+    /*color: #b8bac6;*/
+}
