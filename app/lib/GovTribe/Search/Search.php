@@ -86,7 +86,7 @@ class Search
 	 * @param  string  $searchString
 	 * @param  string  $facet
 	 * @param  string  $indexName
-	 * @return void
+	 * @return array
 	 */
 	public function doBATQuery($searchString, $facet, $indexName = 'entity-name')
 	{
@@ -118,7 +118,7 @@ class Search
 			'synopsis',
 		));
 
-		// Filter facet
+		// Facet filter
 		$boolAndFilter = new \Elastica\Filter\BoolAnd;
 
 		// Filter to projects
