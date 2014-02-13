@@ -1,6 +1,8 @@
 <table class="table results-table table-hover">
 	<tbody>
-		@if (count($hits) === 0)	
+		@if (!isset($hits))	
+			<tr></tr>
+		@elseif (count($hits) === 0)	
 			<tr>
 				<td><h3>No Results</h3></td>
 			</tr>

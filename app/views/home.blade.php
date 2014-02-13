@@ -10,8 +10,7 @@
 	</div>
 	<div class="row" style="padding:20px;">
 		<div class="col-md-8">
-			<table class="table results-table table-hover">
-			</table>
+			@include('results')
 		</div>
 		<div class="col-md-4">
 			@include('facets')

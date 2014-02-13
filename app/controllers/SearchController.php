@@ -23,13 +23,12 @@ class SearchController extends BaseController {
 			foreach ($facetItems['terms'] as $facetItem) $facets[$facetName][$facetItem['term']] = $facetItem['count'];
 		}
 
-		$data = json_encode(array(
-			'results' => (string) View::make('results')->with('hits', $hits),
-			'facets' => (string) View::make('facets')->with('facets', array()),
-		));
+		$response = array(
+			'facets' => (string) View::make('facets')->withFacets($facets),
+			'results' => (string) View::make('results')->withHits($hits)
+		);
 
-		return $data;
-
+		return Response::json($response);
 	}
 
 }
