@@ -129,10 +129,10 @@ class Search
 		// Optionally filter on facets
 		if (!empty($facet))
 		{
-			$facet = explode(':', $facet);
+			$facet = explode('xxx', $facet);
 
 			$termFilter = new \Elastica\Filter\Term;
-			$termFilter->setTerm($facet[0] . '.name', $facet[1]);
+			$termFilter->setTerm($facet[0] . '.name', str_replace('-', ' ', $facet[1]));
 			$nestedFilter = new \Elastica\Filter\Nested;
 			$nestedFilter->setPath($facet[0]);
 			$nestedFilter->setFilter($termFilter);

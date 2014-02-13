@@ -34,9 +34,7 @@ $('#big-search').submit(function (ev) {
 						console.log('Reset to base query');
 						frm.find('input[name="facet"]').val('');
 					} else {
-						console.log('Setting Facet Value');
 						frm.find('input[name="facet"]').val(clickedFacetValue);
-						console.log(frm.find('input[name="facet"]').val());
 					}
 								 $.ajax({
 										type: frm.attr('method'),

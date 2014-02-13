@@ -9,7 +9,7 @@
 		@else
 			@foreach ($hits as $hit)
 			<tr>
-				<td>(agency logo)</td>
+				<td>{{ HTML::image("assets/agency/" . $hit['agencies'][0]['_id'] . '.png', $hit['agencies'][0]['name']) }}</td>
 				<td>{{ $hit['name'] }}</td>
 				<td>John Smith<br>
 					Contracting Officer<br>
