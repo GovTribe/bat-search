@@ -20,9 +20,24 @@ $('#big-search').submit(function (ev) {
 		type: frm.attr('method'),
 		url: frm.attr('action'),
 		data: frm.serialize(),
+        dataType: 'json',
 		success: function (data) {
-			$( ".results-table" ).replaceWith(data);
+			$( ".results-table" ).replaceWith(data.results);
+           $( ".facets-list" ).replaceWith(data.facets);
 		}
 	});
 	ev.preventDefault();
+});
+
+var facets = $('#facets');
+$('#facets').on('click', 'li', function (ev) {
+    $.ajax({
+        type: facets.attr('method'),
+        url: facets.attr('action'),
+        data: facets.serialize(),
+        success: function (data) {
+           $( ".facets-list" ).replaceWith(data);
+        }
+    });
+    ev.preventDefault();
 });
