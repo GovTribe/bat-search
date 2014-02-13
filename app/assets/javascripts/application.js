@@ -22,10 +22,14 @@ $('#big-search').submit(function (ev) {
 		data: frm.serialize(),
 		dataType: "json",
 		success: function (data) {
-			console.log(data);
+			
 			$( ".results-table" ).replaceWith(data.results);
-			$( ".facets-list" ).replaceWith(data.facets);
+			$( ".list-group" ).replaceWith(data.facets);
 		}
 	});
 	ev.preventDefault();
+});
+
+$('#facets-list').on('click','a.list-group-item', function(){
+			console.log('Heyo');
 });
