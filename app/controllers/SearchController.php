@@ -12,7 +12,7 @@ class SearchController extends BaseController {
 	protected function query(array $hits = array(), array $facets = array(
 		'agencies' => array(), 'offices' => array(), 'categories' => array()))
 	{
-		$result = Search::doBATQuery(Input::get('query'));
+		$result = Search::doBATQuery(Input::get('query'), Input::get('facet'));
 		
 		// Get hits
 		foreach ($result->getResults() as $hit) $hits[] = $hit->getData();

@@ -83,25 +83,28 @@ class Search
 	/**
 	 * Perform a BAT search query.
 	 *
-	 * @param  string  $queryString
+	 * @param  string  $searchString
+	 * @param  string  $facet
 	 * @param  string  $indexName
 	 * @return void
 	 */
-	public function doBATQuery($searchString, $indexName = 'entity-name')
+	public function doBATQuery($searchString, $facet, $indexName = 'entity-name')
 	{
+		Log::info($searchString);
+
 		// Base query
 		$query = new Query;
 		$query->setSize(50);
 		$query->setFields(array('name', 'open', 'mail', 'agencies', 'categories'));
 
-		// Add facets
+		// Add query facets
 		foreach (array('agencies', 'categories', 'offices') as $value) 
 		{
-			$facet = new Terms($value);
-			$facet->setSize(5);
-			$facet->setNested($value);
-			$facet->setField($value . '.name');
-			$query->addFacet($facet);
+			$queryFacet = new Terms($value);
+			$queryFacet->setSize(5);
+			$queryFacet->setNested($value);
+			$queryFacet->setField($value . '.name');
+			$query->addFacet($queryFacet);
 		}
 
 		// Setup actual query
@@ -115,14 +118,29 @@ class Search
 			'synopsis',
 		));
 
-		$boolQuery = new Bool();
-		$boolQuery->addMust($multiMatch);
+		// Filter facet
+		$boolAndFilter = new \Elastica\Filter\BoolAnd;
 
-		$filter = new \Elastica\Filter\Term;
-		$filter->setTerm('type', 'project');
-		$filteredQuery = new Filtered($boolQuery, $filter);
+		// Filter to projects
+		$typeFilter = new \Elastica\Filter\Type;
+		$typeFilter->setType('Project');
+		$boolAndFilter->addFilter($typeFilter);
 
-		$query->setQuery($boolQuery);
+		// Optionally filter on facets
+		if (!empty($facet))
+		{
+			$facet = explode(':', $facet);
+
+			$termFilter = new \Elastica\Filter\Term;
+			$termFilter->setTerm($facet[0] . '.name', $facet[1]);
+			$nestedFilter = new \Elastica\Filter\Nested;
+			$nestedFilter->setPath($facet[0]);
+			$nestedFilter->setFilter($termFilter);
+			$boolAndFilter->addFilter($nestedFilter);
+		}
+
+		$query->setQuery($multiMatch);
+		$query->setFilter($boolAndFilter);
 
 		return $this->getIndex($indexName)->search($query);
 	}
