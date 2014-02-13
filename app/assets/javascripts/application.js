@@ -13,3 +13,16 @@
 //= require ../components/jquery/jquery.min.js
 //= require ../components/bootstrap/dist/js/bootstrap.min.js
 //= require_tree .
+
+var frm = $('#big-search');
+$('#big-search').submit(function (ev) {
+	$.ajax({
+		type: frm.attr('method'),
+		url: frm.attr('action'),
+		data: frm.serialize(),
+		success: function (data) {
+			$( ".results-table" ).replaceWith(data);
+		}
+	});
+	ev.preventDefault();
+});

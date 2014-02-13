@@ -16,8 +16,4 @@ Route::get('/', function()
 	return View::make('home');
 });
 
-Form::macro('bigSearch', function()
-{
-});
-
 Route::post('search', array('before' => 'csrf', 'uses' => 'SearchController@query'));

@@ -35,7 +35,6 @@ class Search
 	 * Set the Elastica client instance.
 	 *
 	 * @param Elastica\Client  $elastica
-	 *
 	 * @return void
 	 */
 	protected function setElastica(Elastica\Client $elastica)
@@ -47,7 +46,6 @@ class Search
 	 * Set the indexing configuration.
 	 *
 	 * @param  array $config
-	 *
 	 * @return void
 	 */
 	protected function setConfig(array $config)
@@ -59,7 +57,6 @@ class Search
 	 * Get the underlying index instance.
 	 *
 	 * @param  string  $indexName
-	 *
 	 * @return void
 	 */
 	public function getIndex($indexName)
@@ -72,7 +69,6 @@ class Search
 	 *
 	 * @param  string  $indexName
 	 * @param  string  $typeName
-	 *
 	 * @return void
 	 */
 	public function getType($indexName, $typeName)
@@ -81,19 +77,14 @@ class Search
 	}
 
 	/**
-	 * Perform a BAT query.
+	 * Perform a BAT search query.
 	 *
 	 * @param  string  $queryString
 	 * @param  string  $indexName
-	 *
 	 * @return void
 	 */
 	public function doBATQuery($searchString, $indexName = 'entity-name')
 	{
-		$index = $this->getIndex($indexName);
-
-		$boolQuery = new Bool();
-
 		$multiMatch = new MultiMatch();
 		$multiMatch->setQuery($searchString);
 		$multiMatch->setFields(array(
@@ -112,11 +103,10 @@ class Search
 		// $multiMatch->setParam('type', 'bool');
 		// $multiMatch->setParam('operator', 'AND');
 
+		$boolQuery = new Bool();
 		$boolQuery->addMust($multiMatch);
 
-		$data = $index->search($boolQuery);
-
-		return $data;
+		return $this->getIndex($indexName)->search($boolQuery);
 	}
 
 }

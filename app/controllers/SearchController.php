@@ -5,16 +5,16 @@ class SearchController extends BaseController {
 	/**
 	 * Perform a search.
 	 *
+	 * @param  array
 	 * @return void
 	 */
-	protected function query()
+	protected function query(array $hits = array())
 	{
-		$results = Search::doBATQuery(Input::get('query'));
+		$result = Search::doBATQuery(Input::get('query'));
 		
-		foreach ($results->getResults() as $item)
-		{
-			var_dump($item->getData()['name']);
-		}
+		foreach ($result->getResults() as $hit) $hits[] = $hit->getData();
+
+		return View::make('results')->with('hits', $hits);
 	}
 
 }
