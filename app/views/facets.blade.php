@@ -1,9 +1,9 @@
-<ul class="list-group">
-	<li class="list-group-item">
+<ul class="list-group" id="facets">
+    <li class="list-group-item" style="border-left:none; border-right:none;">
 		<b>Agencies</b>
 	</li>
     @if (!isset($facets))
-        <li class="list-group-item">
+    <li class="list-group-item active" style="border-left:none; border-right:none;">
         <blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;">No Agencies</blockquote>
         </li>
     @else
@@ -14,7 +14,7 @@
             </li>
         @endforeach
     @endif
-	<li class="list-group-item">
+	<li class="list-group-item" style="border-left:none; border-right:none;">
 		<b>Offices</b>
 	</li>
     @if (!isset($facets))
