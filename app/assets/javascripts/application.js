@@ -25,11 +25,11 @@ $('#big-search').submit(function (ev) {
 			
 			$( ".results-table" ).replaceWith(data.results);
 			$( ".list-group" ).replaceWith(data.facets);
-		}
+
+			$('#facets-list').on('click', function(){
+					console.log('AHHHHH!!!');
+				});
+			}
 	});
 	ev.preventDefault();
-});
-
-$('#facets-list').on('click','a.list-group-item', function(){
-			console.log('Heyo');
 });
