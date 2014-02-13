@@ -10,7 +10,7 @@
 				<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;">{{ Str::title($type) }}</blockquote>
 			</li>
 			@foreach ($data as $name => $count)
-				<a href="#" class="list-group-item">
+				<a href="#" class="list-group-item" id={{str_replace(' ', '-', $type.':'.$name)}}>
 				<span class="badge">{{$count}}</span>
 				<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;">{{$name}}</blockquote>
 				</a>

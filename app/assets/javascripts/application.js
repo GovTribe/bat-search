@@ -26,8 +26,31 @@ $('#big-search').submit(function (ev) {
 			$( ".results-table" ).replaceWith(data.results);
 			$( ".list-group" ).replaceWith(data.facets);
 
-			$('#facets-list').on('click', function(){
-					console.log('AHHHHH!!!');
+			$('#facets-list').on('click', 'a', function(){
+					
+					var clickedFacetValue = $(this).attr("id");
+					var currentFacetValue = frm.find('input[name="facet"]').val();
+					if (clickedFacetValue === currentFacetValue) {
+						console.log('Reset to base query');
+						frm.find('input[name="facet"]').val('');
+					} else {
+						console.log('Setting Facet Value');
+						frm.find('input[name="facet"]').val(clickedFacetValue);
+						console.log(frm.find('input[name="facet"]').val());
+					}
+								 $.ajax({
+										type: frm.attr('method'),
+										url: frm.attr('action'),
+										data: frm.serialize(),
+										dataType: "json",
+										success: function (data) {
+										
+										$( ".results-table" ).replaceWith(data.results);
+										
+										
+										}
+								});
+				
 				});
 			}
 	});
