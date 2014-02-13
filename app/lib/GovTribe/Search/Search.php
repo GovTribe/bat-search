@@ -1,9 +1,13 @@
 <?php namespace GovTribe\Search;
 
 use Elastica;
+use Elastica\Query;
+use Elastica\Query\Builder;
 use Elastica\Query\Bool;
 use Elastica\Query\MultiMatch;
+use Elastica\Facet\Terms;
 use Elastica\Query\Term;
+use Elastica\Query\Filtered;
 use Elastica\Facet;
 use Carbon;
 use Log;
@@ -85,6 +89,22 @@ class Search
 	 */
 	public function doBATQuery($searchString, $indexName = 'entity-name')
 	{
+		// Base query
+		$query = new Query;
+		$query->setSize(50);
+		$query->setFields(array('name', 'open', 'mail', 'agencies', 'categories'));
+
+		// Add facets
+		foreach (array('agencies', 'categories', 'offices') as $value) 
+		{
+			$facet = new Terms($value);
+			$facet->setSize(5);
+			$facet->setNested($value);
+			$facet->setField($value . '.name');
+			$query->addFacet($facet);
+		}
+
+		// Setup actual query
 		$multiMatch = new MultiMatch();
 		$multiMatch->setQuery($searchString);
 		$multiMatch->setFields(array(
@@ -92,21 +112,19 @@ class Search
 			'name.front^2',
 			'name.middle',
 			'name.back',
-			'mail',
 			'synopsis',
-			'acronym^3'
 		));
-
-		// $multiMatch->setParam('fuzziness', 0.8);
-		// $multiMatch->setParam('prefix_length', 3);
-		// $multiMatch->setParam('max_expansions', 5);
-		// $multiMatch->setParam('type', 'bool');
-		// $multiMatch->setParam('operator', 'AND');
 
 		$boolQuery = new Bool();
 		$boolQuery->addMust($multiMatch);
 
-		return $this->getIndex($indexName)->search($boolQuery);
+		$filter = new \Elastica\Filter\Term;
+		$filter->setTerm('type', 'project');
+		$filteredQuery = new Filtered($boolQuery, $filter);
+
+		$query->setQuery($boolQuery);
+
+		return $this->getIndex($indexName)->search($query);
 	}
 
 }
