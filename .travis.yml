@@ -17,4 +17,4 @@ before_script:
   - php artisan serve &
 
 script:
-  - bin/codecept run
+  - vendor/bin/codecept run
