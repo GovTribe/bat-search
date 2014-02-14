@@ -6,18 +6,16 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">{{ Str::title($type) }}</h3>
 				</div>
-				<ul class="list-group">
+				<div class="list-group">
 				@foreach ($data as $name => $count)
-					<li class="list-group-item">
-						<a href="#" id={{ str_replace(' ', '-', $type.'xxx'.$name) }}>
-							<span class="badge">
-								{{$count}}
-							</span>
-							{{ $name }} 
+						<a href="#" id={{ str_replace(' ', '-', $type.'xxx'.$name) }} class="list-group-item">
+						<span class="badge pull-left" style="margin-right:16px">
+						{{$count}}
+						</span>
+						{{ $name }}
 						</a>
-					</li>
 				@endforeach
-				</ul>
+				</div>
 			</div>				
 		@endif
 	@endforeach
