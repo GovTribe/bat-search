@@ -43,7 +43,7 @@
 							@if (!empty($hit['people']))
 								<div class="list-group">
 									@foreach ($hit['people'] as $person)
-										<a href={{'getModal/'. $person['type'] . '/' . $person['_id']}} class="list-group-item" style="border-style:none">{{ $person['name'] }}</a>
+										<a href={{'getModal/'. $person['type'] . '/' . $person['_id']}} class=" modal-link list-group-item" style="border-style:none">{{ $person['name'] }}</a>
 									@endforeach
 								</div>
 							@else

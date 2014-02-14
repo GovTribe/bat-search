@@ -15,7 +15,6 @@
 //= require ../components/spin.js/spin.js
 //= require ../components/spin.js/jquery.spin.js
 //= require_tree .
-
 var frm = $('#big-search');
 $('#big-search').submit(function (ev) {
 	frm.find('input[name="facet"]').val('');
@@ -51,6 +50,17 @@ $('#big-search').submit(function (ev) {
 			spinner.stop();
 			$( ".results" ).replaceWith(data.results);
 			$( ".list-group-facets" ).replaceWith(data.facets);
+
+			$('#results').on('click', 'a', function(){
+				        event.preventDefault()
+				        $('#myModal').removeData("modal")
+				        $('#myModal').modal({remote: $(this).attr("href")})
+			});
+			
+			// $('body').on('hidden', '.modal', function () {
+			// 	console.log('i hidd');
+			//   $(this).removeData('modal');
+			// });
 
 			$('#facets-list').on('click', 'a', function(){
 
