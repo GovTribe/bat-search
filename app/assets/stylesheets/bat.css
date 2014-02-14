@@ -60,9 +60,10 @@ body {
 	color: #ccc;
 }
 
-.img, .agency-logo{
-    margin-left: 10px;
-    margin-right: 10px;
+.agency-logo{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .result-heading.alt {

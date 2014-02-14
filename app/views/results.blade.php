@@ -5,9 +5,9 @@
 	@else
 		@foreach ($hits as $hit)
 			<div class="panel panel-default" style="padding:10px;">
-				<div class="row">
+				<div class="row" style="padding:10px;">
 					<div class="col-md-2">
-						{{ HTML::image("assets/agency/" . $hit['agencies'][0]['_id'] . '.png', $hit['agencies'][0]['name'],  array('class' => 'agency-logo'))}}
+						{{ HTML::image("assets/agency/" . $hit['agencies'][0]['_id'] . '.png', $hit['agencies'][0]['name'],  array('class' => 'img-responsive agency-logo'))}}
 					</div>
 					<div class="col-md-10">
 						<h2>{{ $hit['name'] }}</h2>
@@ -23,7 +23,7 @@
 				</div>
 				<hr>
 				<div class="row" style="padding:10px;">
-					<div class="col-md-6">
+					<div class="col-md-3">
 						<div class="vendors-callout">
 							<h4>Vendors</h4>
 							@if (!empty($hit['vendors']))
@@ -37,7 +37,7 @@
 							@endif
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-3">
 						<div class="contacts-callout">
 							<h4>Contacts</h4>
 							@if (!empty($hit['people']))
