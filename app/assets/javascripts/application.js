@@ -59,7 +59,6 @@ $('#big-search').submit(function (ev) {
 			});
 		   
 		   $('#myModal').on('hidden.bs.modal', function () {
-				console.log('Hiding');
 				$(this).removeData("bs.modal")
 			})
 			
