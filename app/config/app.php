@@ -113,6 +113,7 @@ return array(
 
 		//GovTribe
 		'GovTribe\Search\SearchServiceProvider',
+		'GovTribe\API\APIServiceProvider',
 	),
 
 	/*
@@ -181,6 +182,7 @@ return array(
 
 		//GovTribe
 		'Search'          => 'GovTribe\Search\Facades\Search',
+		'GTClient'        => 'GovTribe\API\Facades\Client',
 	),
 
 );

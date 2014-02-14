@@ -16,4 +16,5 @@ Route::get('/', function()
 	return View::make('home');
 });
 
+Route::get('getModal/{type}/{id}', array('uses' => 'EntityController@getModal'));
 Route::post('search', array('before' => 'csrf', 'uses' => 'SearchController@query'));

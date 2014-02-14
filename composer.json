@@ -8,7 +8,8 @@
 		"ruflin/Elastica": "*",
 		"barryvdh/laravel-debugbar": "1.*",
 		"codesleeve/asset-pipeline": "dev-master",
-		"raveren/kint": "0.9"
+		"raveren/kint": "0.9",
+		"guzzle/guzzle": "~3.7"
 	},
 	"require-dev": {
 		"codeception/codeception": "*"
