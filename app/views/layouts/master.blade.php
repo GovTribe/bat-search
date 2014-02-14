@@ -7,6 +7,7 @@
 	<body>
 		<div class="container-fluid">
 			@yield('content')
+			@include('modal')
 		</div>
 		@include('footer')
 		<?= javascript_include_tag() ?>
