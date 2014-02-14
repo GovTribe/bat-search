@@ -50,7 +50,7 @@ $('#big-search').submit(function (ev) {
 		success: function (data) {
 			spinner.stop();
 			$( ".results" ).replaceWith(data.results);
-			$( ".list-group" ).replaceWith(data.facets);
+			$( ".list-group-facets" ).replaceWith(data.facets);
 
 			$('#facets-list').on('click', 'a', function(){
 

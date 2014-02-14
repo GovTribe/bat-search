@@ -85,27 +85,21 @@ class Search
 	 *
 	 * @param  string  $searchString
 	 * @param  string  $facet
-	 * @param  string  $indexName
+	 * @param  string  $params
 	 * @return array
 	 */
-	public function doBATQuery($searchString, $facet, $indexName = 'entity-name')
+	public function doBATQuery($searchString, $facet, array $params)
 	{
-		Log::info($searchString);
+		// Get $fields, $indexName, $queryFacets
+		extract($params);
 
 		// Base query
 		$query = new Query;
 		$query->setSize(50);
-		$query->setFields(array(
-			'name', 'awardValue', 
-			'vendors', 'agencies', 
-			'categories', 'offices',
-			'goodsOrServices', 'synopsis',
-			'setAsideType', 'open', 'protested',
-			'NAICS', 'people'
-		));
+		$query->setFields(array_keys($fields));
 
 		// Add query facets
-		foreach (array('agencies', 'categories', 'offices', 'vendors', 'people') as $value) 
+		foreach ($queryFacets as $value) 
 		{
 			$queryFacet = new Terms($value);
 			$queryFacet->setSize(5);
