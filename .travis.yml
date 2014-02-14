@@ -13,12 +13,8 @@ before_script:
 
 before_script:
   - composer self-update
-  - composer install --dev --no-interaction -vvv
+  - composer install --dev --no-interaction
   - php artisan serve &
-
-script:
-  - mkdir -p build/logs
-  - phpunit --coverage-clover build/logs/clover.xml
 
 script:
   - bin/codecept run
