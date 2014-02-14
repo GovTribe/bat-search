@@ -1,4 +1,4 @@
-<div class="list-group" id="facets-list">
+<div class="list-group list-group-facets" id="facets-list">
 @if (isset($facets))
 	@foreach ($facets as $type => $data)
 		@if (!empty($data))

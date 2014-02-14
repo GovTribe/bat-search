@@ -27,6 +27,24 @@ body {
     top: 30px;
   }
 
+/* Callout styles
+-------------------------------------------------- */
+.callout {
+    background-color: #f4f8fa;
+    border-color: #5bc0de;
+    margin: 20px 0;
+    padding: 20px;
+    border-left: 5px solid #eee;
+}
+
+.contacts-callout {
+    border-color: #f0ad4e;
+}
+
+.vendors-callout {
+    border-color: #5bc0de;
+}
+
 /* Results table styles
 -------------------------------------------------- */
 .table-no-border>thead>tr>th, 
@@ -42,11 +60,18 @@ body {
 	color: #ccc;
 }
 
+.img, .agency-logo{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .result-heading.alt {
     display: inline-block;
     width: 100%;
     text-align: left;
-    padding: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
 }
 
 .result-heading.alt a {

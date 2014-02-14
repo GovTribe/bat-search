@@ -4,18 +4,56 @@
 		<div class='no-results'><h1>No Results</h1></div>
 	@else
 		@foreach ($hits as $hit)
-			<div class="panel panel-default result">
-				<div class="result-heading alt">
-					<a href="#">
-						{{ HTML::image("assets/agency/" . $hit['agencies'][0]['_id'] . '.png', $hit['agencies'][0]['name']) }}
-					</a>
-				<h2>{{ $hit['name'] }}</h2>
-				<p class="lead">{{ $hit['agencies'][0]['name'] }}</p>
+			<div class="panel panel-default" style="padding:10px;">
+				<div class="row">
+					<div class="col-md-2">
+						{{ HTML::image("assets/agency/" . $hit['agencies'][0]['_id'] . '.png', $hit['agencies'][0]['name'],  array('class' => 'agency-logo'))}}
+					</div>
+					<div class="col-md-10">
+						<h2>{{ $hit['name'] }}</h2>
+						<p class="lead">{{ $hit['agencies'][0]['name'] }}</p>
+					</div>
+				</div>
+				<div class="row" style="padding:10px;">
+					<div class="col-md-12">
+						<blockquote>
+							<p style="font-size: .8em;">{{ $hit['synopsis'] }}</p>
+						</blockquote>
+					</div>
+				</div>
+				<hr>
+				<div class="row" style="padding:10px;">
+					<div class="col-md-6">
+						<div class="vendors-callout">
+							<h4>Vendors</h4>
+							@if (!empty($hit['vendors']))
+								<ul>
+									@foreach ($hit['vendors'] as $vendor)
+										<li>{{ $vendor['name'] }}</li>
+									@endforeach
+								</ul>
+							@else
+								<code>None</code>
+							@endif
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="contacts-callout">
+							<h4>Contacts</h4>
+							@if (!empty($hit['people']))
+								<ul>
+									@foreach ($hit['people'] as $person)
+										<li>{{ $person['name'] }}</li>
+									@endforeach
+								</ul>
+							@else
+								<code>None</code>
+							@endif
+						</div>
+					</div>
+					</div>
 				</div>
 
-				<div class="panel-body">
-				</div>
-			</div>
 		@endforeach
 	@endif
 </div>

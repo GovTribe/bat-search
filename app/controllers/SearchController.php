@@ -17,7 +17,7 @@ class SearchController extends BaseController {
 				'open' => false, 
 				'protested' => false,
 				'NAICS' => 'N/A',
-				'synopsis' => 'N/A',
+				'synopsis' => 'No synopsis.',
 				'setAsideType' => 'N/A',
 				'awardValue' => 'N/A', 
 				'goodsOrServices' => 'goods', 
@@ -63,6 +63,10 @@ class SearchController extends BaseController {
 			$result = $result->getData();
 			$missing = array_diff_key ($fields, $result);
 			$result = array_merge($result, $missing);
+
+			// Clean up project names.
+			$result['name'] = preg_replace("#^.*--#", '', $result['name']);
+			if (mb_strlen($result['name']) > 100) $result['name'] = Str::limit($result['name'], 100);
 
 			// Limit synopsis to 500 characters, strip tags.
 			$result['synopsis'] = trim(strip_tags($result['synopsis']));
