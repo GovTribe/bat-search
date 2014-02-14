@@ -16,6 +16,7 @@
 
 var frm = $('#big-search');
 $('#big-search').submit(function (ev) {
+	frm.find('input[name="facet"]').val('');
 	$.ajax({
 		type: frm.attr('method'),
 		url: frm.attr('action'),
