@@ -10,6 +10,9 @@
 		"codesleeve/asset-pipeline": "dev-master",
 		"raveren/kint": "0.9"
 	},
+	"require-dev": {
+		"codeception/codeception": "*"
+	},
 	"autoload": {
 		"classmap": [
 			"app/commands",
