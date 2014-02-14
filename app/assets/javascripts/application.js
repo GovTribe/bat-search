@@ -51,25 +51,18 @@ $('#big-search').submit(function (ev) {
 			$( ".results" ).replaceWith(data.results);
 			$( ".list-group-facets" ).replaceWith(data.facets);
 		   
-		   	$('#results').on('click', 'a', function(){
-			console.log('tapend');
-							 
-							 
-							 
-							 
-			});
 
 			$('#results').on('click', 'a', function(){
 				        event.preventDefault()
 				        $('#myModal').removeData("modal")
 				        $('#myModal').modal({remote: $(this).attr("href")})
 			});
+		   
+		   $('#myModal').on('hidden.bs.modal', function () {
+				console.log('Hiding');
+				$(this).removeData("bs.modal")
+			})
 			
-			// $('body').on('hidden', '.modal', function () {
-			// 	console.log('i hidd');
-			//   $(this).removeData('modal');
-			// });
-
 			$('#facets-list').on('click', 'a', function(){
 
 				$('#facets-list').children().has("a").each(function(){
