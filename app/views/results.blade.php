@@ -1,25 +1,21 @@
-<table class="table results-table table-hover">
-	<tbody>
-		@if (!isset($hits))	
-			<tr></tr>
-		@elseif (count($hits) === 0)	
-			<tr>
-				<td><h3>No Results</h3></td>
-			</tr>
-		@else
-			@foreach ($hits as $hit)
-			<tr>
-				<td>{{ HTML::image("assets/agency/" . $hit['agencies'][0]['_id'] . '.png', $hit['agencies'][0]['name']) }}</td>
-				<td>{{ $hit['name'] }}</td>
-				<td>John Smith<br>
-					Contracting Officer<br>
-					+1 (202) 555-5555<br>
-					jsmith@government.gov</td>
-				<td>Awarded Vendors:<br>
-					Seed Tech Industries<br>
-					Microjoint Inc.</td>
-			</tr>
-			@endforeach
-		@endif
-	</tbody>
-</table>
+<div class="results">
+	@if (!isset($hits))	
+	@elseif (count($hits) === 0)
+		<div class='no-results'><h1>No Results</h1></div>
+	@else
+		@foreach ($hits as $hit)
+			<div class="panel panel-default result">
+				<div class="result-heading alt">
+					<a href="#">
+						{{ HTML::image("assets/agency/" . $hit['agencies'][0]['_id'] . '.png', $hit['agencies'][0]['name']) }}
+					</a>
+				<h2>{{ $hit['name'] }}</h2>
+				<p class="lead">{{ $hit['agencies'][0]['name'] }}</p>
+				</div>
+
+				<div class="panel-body">
+				</div>
+			</div>
+		@endforeach
+	@endif
+</div>

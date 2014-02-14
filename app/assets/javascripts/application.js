@@ -23,7 +23,7 @@ $('#big-search').submit(function (ev) {
 		dataType: "json",
 		success: function (data) {
 			
-			$( ".results-table" ).replaceWith(data.results);
+			$( ".results" ).replaceWith(data.results);
 			$( ".list-group" ).replaceWith(data.facets);
 
 			$('#facets-list').on('click', 'a', function(){
@@ -43,7 +43,7 @@ $('#big-search').submit(function (ev) {
 										dataType: "json",
 										success: function (data) {
 										
-										$( ".results-table" ).replaceWith(data.results);
+										$( ".results" ).replaceWith(data.results);
 										
 										
 										}

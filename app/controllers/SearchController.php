@@ -5,9 +5,9 @@ class SearchController extends BaseController {
 	/**
 	 * Perform a search.
 	 *
-	 * @param  array
-	 * @param  array
-	 * @return void
+	 * @param  array $hits
+	 * @param  array $facets
+	 * @return Illuminate\Http\Response
 	 */
 	protected function query(array $hits = array(), array $facets = array(
 		'agencies' => array(), 'offices' => array(), 'categories' => array()))
@@ -23,12 +23,10 @@ class SearchController extends BaseController {
 			foreach ($facetItems['terms'] as $facetItem) $facets[$facetName][$facetItem['term']] = $facetItem['count'];
 		}
 
-		$response = array(
+		return Response::json(array(
 			'facets' => (string) View::make('facets')->withFacets($facets),
 			'results' => (string) View::make('results')->withHits($hits)
-		);
-
-		return Response::json($response);
+		));
 	}
 
 }

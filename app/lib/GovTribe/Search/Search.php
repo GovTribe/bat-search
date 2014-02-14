@@ -95,10 +95,17 @@ class Search
 		// Base query
 		$query = new Query;
 		$query->setSize(50);
-		$query->setFields(array('name', 'open', 'mail', 'agencies', 'categories'));
+		$query->setFields(array(
+			'name', 'awardValue', 
+			'vendors', 'agencies', 
+			'categories', 'offices',
+			'goodsOrServices', 'synopsis',
+			'setAsideType', 'open', 'protested',
+			'NAICS', 'people'
+		));
 
 		// Add query facets
-		foreach (array('agencies', 'categories', 'offices') as $value) 
+		foreach (array('agencies', 'categories', 'offices', 'vendors', 'people') as $value) 
 		{
 			$queryFacet = new Terms($value);
 			$queryFacet->setSize(5);
