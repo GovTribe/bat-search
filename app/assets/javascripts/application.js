@@ -50,6 +50,14 @@ $('#big-search').submit(function (ev) {
 			spinner.stop();
 			$( ".results" ).replaceWith(data.results);
 			$( ".list-group-facets" ).replaceWith(data.facets);
+		   
+		   	$('#results').on('click', 'a', function(){
+			console.log('tapend');
+							 
+							 
+							 
+							 
+			});
 
 			$('#results').on('click', 'a', function(){
 				        event.preventDefault()
