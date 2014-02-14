@@ -9,7 +9,7 @@
 		</div>
 	</div>
 	<div class="row" style="padding:20px;">
-		<div class="col-md-8">
+		<div class="col-md-8"  id="results-row">
 			@include('results')
 		</div>
 		<div class="col-md-4">

@@ -1,4 +1,4 @@
-<div class="results">
+<div class="results" id="results">
 	@if (!isset($hits))	
 	@elseif (count($hits) === 0)
 		<div class='no-results'><h1>No Results</h1></div>
