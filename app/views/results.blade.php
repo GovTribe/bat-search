@@ -27,11 +27,11 @@
 						<div class="vendors-callout">
 							<h4>Vendors</h4>
 							@if (!empty($hit['vendors']))
-								<ul>
+								<div class="list-group">
 									@foreach ($hit['vendors'] as $vendor)
-										<li>{{ $vendor['name'] }}</li>
+									<a href={{$vendor['type'] . '/' . $vendor['_id']}} class="list-group-item" style="border-style:none">{{ $vendor['name'] }}</a>
 									@endforeach
-								</ul>
+								</div>
 							@else
 								<code>None</code>
 							@endif
@@ -41,11 +41,11 @@
 						<div class="contacts-callout">
 							<h4>Contacts</h4>
 							@if (!empty($hit['people']))
-								<ul>
+								<div class="list-group">
 									@foreach ($hit['people'] as $person)
-										<li>{{ $person['name'] }}</li>
+										<a href={{$person['type'] . '/' . $person['_id']}} class="list-group-item" style="border-style:none">{{ $person['name'] }}</a>
 									@endforeach
-								</ul>
+								</div>
 							@else
 								<code>None</code>
 							@endif
