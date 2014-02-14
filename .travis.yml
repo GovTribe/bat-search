@@ -1,0 +1,24 @@
+language: php
+
+php:
+  - 5.5
+
+before_script:
+  - sudo apt-get install libpcre3 libpcre3-dev
+  - composer self-update
+  - composer install --no-interaction --prefer-source --dev -vvv
+  - mysql -e 'create database edorchestral;'
+  - mysql -e 'create database edorchestral_test;'
+  - php artisan serve &
+
+before_script:
+  - composer self-update
+  - composer install --dev --no-interaction -vvv
+  - php artisan serve &
+
+script:
+  - mkdir -p build/logs
+  - phpunit --coverage-clover build/logs/clover.xml
+
+script:
+  - bin/codecept run
