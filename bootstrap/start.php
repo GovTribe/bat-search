@@ -58,6 +58,17 @@ $framework = $app['path.base'].
 
 require $framework.'/Illuminate/Foundation/start.php';
 
+
+/*
+|--------------------------------------------------------------------------
+| Remove Laravel's X-Frame-Options: SAMEORIGIN header 
+|--------------------------------------------------------------------------
+|
+| This allows the site to be loaded in iframes.
+*/
+
+App::forgetMiddleware('Illuminate\Http\FrameGuard');
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
