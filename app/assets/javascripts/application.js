@@ -112,10 +112,19 @@ $('#big-search').submit(function (ev) {
 										data: frm.serialize(),
 										dataType: "json",
 										success: function (data) {
-										spinner.stop();
-										$( ".results" ).replaceWith(data.results);
+											spinner.stop();
+											$( ".results" ).replaceWith(data.results);
 										
-										
+											$('#results').on('click', 'a', function(){
+				        						event.preventDefault()
+				        						$('#myModal').removeData("modal")
+				        						$('#myModal').modal({remote: $(this).attr("href")})
+												});
+		   
+		  									 $('#myModal').on('hidden.bs.modal', function () {
+											$(this).removeData("bs.modal")
+											})
+
 										}
 								});
 				
