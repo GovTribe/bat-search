@@ -48,6 +48,9 @@ $('#big-search').submit(function (ev) {
 		dataType: "json",
 		success: function (data) {
 			spinner.stop();
+
+
+			
 			$( ".results" ).replaceWith(data.results);
 			$( ".list-group-facets" ).replaceWith(data.facets);
 		   
@@ -63,17 +66,7 @@ $('#big-search').submit(function (ev) {
 			})
 			
 			$('#facets-list').on('click', 'a', function(){
-				
-				var addActive = true
-				var classList =$(this).attr('class').split(/\s+/);
-				$.each( classList, function(index, item){
-				    console.log(item);
-					if (item === 'active') {
-				       addActive = false;
-				    }
-				});
-				
-				
+
 				$('#facets-list').children().has("a").each(function(){
 					$(this).children().each(function(){
 						$(this).children().each(function(){
@@ -81,11 +74,8 @@ $('#big-search').submit(function (ev) {
 						});
 					});
 				});
-				
-				if (addActive) {
-					$(this).addClass("active");
-				}
-				
+								 
+				$(this).addClass("active");
 				
 				var clickedFacetValue = $(this).attr("id");
 				var currentFacetValue = frm.find('input[name="facet"]').val();

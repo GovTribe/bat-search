@@ -26,6 +26,8 @@ class EntityController extends BaseController {
 		$request = $client->get('api/2.0/' . $type . '/' . $id);
 		$entity = $request->send()->json();
 
+		if ($type === 'project') return View::make('projectmodal')->withEntity($entity);
+
 		return View::make('entitymodal')->withEntity($entity);
 	}
 }
