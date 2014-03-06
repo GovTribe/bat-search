@@ -52,7 +52,7 @@ $('#big-search').submit(function (ev) {
 			$( ".list-group-facets" ).replaceWith(data.facets);
 		   
 
-			$('#results').on('click', 'a', function(){
+			$('#results').on('click', 'a', function(event){
 				        event.preventDefault()
 				        $('#myModal').removeData("modal")
 				        $('#myModal').modal({remote: $(this).attr("href")})
@@ -67,7 +67,6 @@ $('#big-search').submit(function (ev) {
 				$('#facets-list').children().has("a").each(function(){
 					$(this).children().each(function(){
 						$(this).children().each(function(){
-							console.log($(this));
 							$(this).removeClass("active");
 						});
 					});
@@ -115,7 +114,7 @@ $('#big-search').submit(function (ev) {
 											spinner.stop();
 											$( ".results" ).replaceWith(data.results);
 										
-											$('#results').on('click', 'a', function(){
+											$('#results').on('click', 'a', function(event){
 				        						event.preventDefault()
 				        						$('#myModal').removeData("modal")
 				        						$('#myModal').modal({remote: $(this).attr("href")})
