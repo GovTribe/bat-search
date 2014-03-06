@@ -10,6 +10,7 @@
 						{{ HTML::image("assets/agency/" . $hit['agencies'][0]['_id'] . '.png', $hit['agencies'][0]['name'],  array('class' => 'img-responsive agency-logo'))}}
 					</div>
 					<div class="col-md-10">
+						<a href={{'getModal/project/' . $hit['_id'] }} class="btn btn-info btn-sm pull-right">Details</a>
 						<h2>{{ $hit['name'] }} <small>{{ $hit['status'] }}</small></h2>
 						<p class="lead">{{ $hit['agencies'][0]['name'] }}</p>
 					</div>

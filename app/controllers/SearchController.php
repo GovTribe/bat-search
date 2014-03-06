@@ -13,6 +13,7 @@ class SearchController extends BaseController {
 		$params = array(
 			'indexName' => 'entity-name',
 			'fields' => array(
+				'_id'  => null,
 				'name' => 'Not Listed', 
 				'open' => false, 
 				'protested' => false,
