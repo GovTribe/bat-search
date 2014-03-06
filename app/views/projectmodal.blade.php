@@ -20,10 +20,9 @@
 		@endif
 	</dl>
 	@if (!empty($entity['files']))
-		<table class="table table-bordered">
+		<table class="table table-bordered modal-table">
 		  <thead>
 		    <tr>
-		      <th>Name</th>
 		      <th>Description</th>
 		      <th>Download</th>
 		    </tr>
@@ -33,8 +32,13 @@
 					@foreach ($package as $entry)
 							@foreach ($entry as $item)
 							    <tr>
-							      <td>{{ $item['name'] }}</td>
-							      <td>{{ $item['description'] }}</td>
+							      <td>
+							      	@if ($item['description'])
+							      		{{ str_limit($item['description'], 200) }}
+							      	@else
+							      		{{ str_limit($item['name'], 50) }}
+							      	@endif
+							      </td>
 							      <td><a href={{ $item['uri'] }} target="_blank">Open</a></td>
 							    </tr>
 							@endforeach
