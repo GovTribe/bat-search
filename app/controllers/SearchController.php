@@ -7,7 +7,7 @@ class SearchController extends BaseController {
 	 *
 	 * @return Illuminate\Http\Response
 	 */
-	protected function query()
+	public function query()
 	{
 		// Setup the search parameters
 		$params = array(
@@ -16,6 +16,8 @@ class SearchController extends BaseController {
 				'name' => 'Not Listed', 
 				'open' => false, 
 				'protested' => false,
+				'status' => 'Not Listed',
+				'timestamp' => 'Not Listed',
 				'NAICS' => 'N/A',
 				'synopsis' => 'No synopsis.',
 				'setAsideType' => 'N/A',
@@ -28,10 +30,14 @@ class SearchController extends BaseController {
 				'offices' => array(), 
 			),
 			'queryFacets' => array(
-				'agencies', 'categories', 
-				'offices', 'vendors', 'people'	
-			)
-		);
+					array('path' => 'agencies.name', 'label' => 'Agencies', 'limit' => 5),
+					array('path' => 'categories.name', 'label' => 'Categories', 'limit' => 5),
+					array('path' => 'offices.name', 'label' => 'Offices', 'limit' => 5),
+					array('path' => 'vendors.name', 'label' => 'Vendors', 'limit' => 5),
+					array('path' => 'people.name', 'label' => 'People', 'limit' => 5),
+					array('path' => 'status', 'label' => 'Status', 'limit' => 5),
+				)
+			);
 
 		// Execute the search
 		$result = Search::doBATQuery(Input::get('query'), Input::get('facet'), $params);
@@ -73,6 +79,9 @@ class SearchController extends BaseController {
 			if (mb_strlen($result['synopsis']) < 25 || empty($result['synopsis'])) $result['synopsis'] = $fields['synopsis'];
 			$result['synopsis'] = Str::limit($result['synopsis'], 500);
 
+			// Format the timestamp
+			$date = new DateTime($result['timestamp']);
+			$result['timestamp'] = $date->format('Y-m-d');
 		}
 
 		return $results;
@@ -87,6 +96,10 @@ class SearchController extends BaseController {
 	 */
 	protected function formatFacets(array $facets, array $formatted = array())
 	{
+		if (empty($facets)) return array();
+
+		foreach ($formatted as &$value) $value = $value['label'];
+
 		// Add a default empty array to each facet type
 		foreach ($formatted as $key => $value)
 		{

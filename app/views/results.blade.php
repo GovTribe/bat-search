@@ -10,7 +10,7 @@
 						{{ HTML::image("assets/agency/" . $hit['agencies'][0]['_id'] . '.png', $hit['agencies'][0]['name'],  array('class' => 'img-responsive agency-logo'))}}
 					</div>
 					<div class="col-md-10">
-						<h2>{{ $hit['name'] }}</h2>
+						<h2>{{ $hit['name'] }} <small>{{ $hit['status'] }}</small></h2>
 						<p class="lead">{{ $hit['agencies'][0]['name'] }}</p>
 					</div>
 				</div>

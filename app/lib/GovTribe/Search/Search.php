@@ -84,31 +84,35 @@ class Search
 	 * Perform a BAT search query.
 	 *
 	 * @param  string  $searchString
-	 * @param  string  $facet
+	 * @param  string  $filterFacet
 	 * @param  string  $params
 	 * @return array
 	 */
-	public function doBATQuery($searchString, $facet, array $params)
+	public function doBATQuery($searchString, $filterFacet, array $params)
 	{
-		// Get $fields, $indexName, $queryFacets
+		// Get $fields, $indexName, $queryFacets from $params.
 		extract($params);
 
-		// Base query
+		// The base query.
 		$query = new Query;
 		$query->setSize(50);
 		$query->setFields(array_keys($fields));
 
-		// Add query facets
-		foreach ($queryFacets as $value) 
-		{
-			$queryFacet = new Terms($value);
-			$queryFacet->setSize(5);
-			$queryFacet->setNested($value);
-			$queryFacet->setField($value . '.name');
-			$query->addFacet($queryFacet);
-		}
+		// The base query's facets.
+		$query = $this->applyQueryFacets($query, $queryFacets);
 
-		// Setup actual query
+		// The base query's filter.
+		$boolAndFilter = new \Elastica\Filter\BoolAnd;
+
+		// Filter the query to only display projects.
+		$typeFilter = new \Elastica\Filter\Type;
+		$typeFilter->setType('Project');
+		$boolAndFilter->addFilter($typeFilter);
+
+		// Apply a user provided filter facet to the query's $boolAndFilter.
+		if (!empty($filterFacet)) $this->applyFilterFacet($boolAndFilter, $filterFacet, $queryFacets);
+		
+		// Setup the actual query.
 		$multiMatch = new MultiMatch();
 		$multiMatch->setQuery($searchString);
 		$multiMatch->setFields(array(
@@ -119,31 +123,93 @@ class Search
 			'synopsis',
 		));
 
-		// Facet filter
-		$boolAndFilter = new \Elastica\Filter\BoolAnd;
-
-		// Filter to projects
-		$typeFilter = new \Elastica\Filter\Type;
-		$typeFilter->setType('Project');
-		$boolAndFilter->addFilter($typeFilter);
-
-		// Optionally filter on facets
-		if (!empty($facet))
-		{
-			$facet = explode('xxx', $facet);
-
-			$termFilter = new \Elastica\Filter\Term;
-			$termFilter->setTerm($facet[0] . '.name', str_replace('-', ' ', $facet[1]));
-			$nestedFilter = new \Elastica\Filter\Nested;
-			$nestedFilter->setPath($facet[0]);
-			$nestedFilter->setFilter($termFilter);
-			$boolAndFilter->addFilter($nestedFilter);
-		}
-
+		// Apply the query.
 		$query->setQuery($multiMatch);
+
+		// Apply the filter.
 		$query->setFilter($boolAndFilter);
 
 		return $this->getIndex($indexName)->search($query);
+	}
+
+	/**
+	 * Apply query facets.
+	 *
+	 * @param  Elastica\Query $query
+	 * @param  array $queryFacets
+	 * @return object
+	 */
+	protected function applyQueryFacets(Elastica\Query $query, $queryFacets)
+	{
+		foreach ($queryFacets as $facetDescription) 
+		{
+			extract($facetDescription);
+
+			$queryFacet = new Terms($path[0]);
+			$queryFacet->setName($label);
+			$queryFacet->setSize($limit);
+
+			$isNested = false;
+			if (count(explode('.', $path)) > 1) $isNested = true;
+
+			if ($isNested)
+			{
+				$queryFacet->setNested(explode('.', $path)[0]);
+				$queryFacet->setField($path);
+			}
+			else
+			{
+				$queryFacet->setField('status');
+			}
+
+			$query->addFacet($queryFacet);
+		}
+
+		return $query;
+	}
+
+	/**
+	 * Apply filter facets.
+	 *
+	 * @param  Elastica\Filter\BoolAnd $boolAnd
+	 * @param  string $filterFacet
+	 * @param  array  $queryFacets
+	 * @return object
+	 */
+	protected function applyFilterFacet(\Elastica\Filter\BoolAnd $boolAndFilter,  $filterFacet, $queryFacets)
+	{
+		$label = explode('xxx', $filterFacet)[0];
+		$value = str_replace('-', ' ', explode('xxx', $filterFacet)[1]);
+
+		// Lookup the description for the facet the user selected.
+		foreach ($queryFacets as $facetDescription)
+		{
+			if ($facetDescription['label'] === $label)
+			{
+				$facetToApply = $facetDescription;
+				break;
+			} 
+		}
+
+		$isNested = false;
+		if (count(explode('.', $facetToApply['path'])) > 1) $isNested = true;
+
+		$termFilter = new \Elastica\Filter\Term;
+		$termFilter->setTerm($facetToApply['path'], $value);
+
+		if ($isNested)
+		{
+			$nestedFilter = new \Elastica\Filter\Nested;
+			$nestedFilter->setPath(explode('.', $facetToApply['path'])[0]);
+			$nestedFilter->setFilter($termFilter);
+			$boolAndFilter->addFilter($nestedFilter);
+		}
+		else
+		{
+			$boolAndFilter->addFilter($termFilter);
+		}
+
+		return $boolAndFilter;
 	}
 
 }

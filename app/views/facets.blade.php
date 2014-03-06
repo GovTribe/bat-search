@@ -4,7 +4,7 @@
 		@if (!empty($data))
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">{{ Str::title($type) }}</h3>
+					<h3 class="panel-title">{{ $type }}</h3>
 				</div>
 				<div class="list-group">
 				@foreach ($data as $name => $count)
