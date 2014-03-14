@@ -1,9 +1,10 @@
 language: php
-
+node_js:
+  - "0.10"
 php:
   - 5.5
-
 before_script:
+  - npm install -g bower
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
   - export DISPLAY=:99.0
@@ -12,6 +13,5 @@ before_script:
   - java -jar selenium-server-standalone-2.35.0.jar -port 4444 &
   - php artisan serve --host "bat.dev" --port 80
   - php vendor/codeception/codeception/codecept build
-
 script:
   - php vendor/codeception/codeception/codecept run
