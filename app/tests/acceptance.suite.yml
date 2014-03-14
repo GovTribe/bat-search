@@ -14,7 +14,7 @@ modules:
    config:
       WebDriver:
          url: 'http://bat.dev/'
-         browser: chrome
+         browser: firefox
          wait: 10
          capabilities:
              unexpectedAlertBehaviour: 'accept'
