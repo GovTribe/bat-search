@@ -4,17 +4,14 @@ php:
   - 5.5
 
 before_script:
-  - sudo apt-get install libpcre3 libpcre3-dev
-  - composer self-update
-  - composer install --no-interaction --prefer-source --dev -vvv
-  - mysql -e 'create database edorchestral;'
-  - mysql -e 'create database edorchestral_test;'
-  - php artisan serve &
-
-before_script:
   - composer self-update
   - composer install --dev --no-interaction
-  - php artisan serve &
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.35.0.jar
+  - java -jar selenium-server-standalone-2.35.0.jar -port 4444 &
+  - php artisan serve --host "bat.dev" --port 80
+  - php vendor/codeception/codeception/codecept build
 
 script:
-  - vendor/bin/codecept run
+  - php vendor/codeception/codeception/codecept run

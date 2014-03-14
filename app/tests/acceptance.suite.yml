@@ -10,9 +10,11 @@
 
 class_name: WebGuy
 modules:
-    enabled:
-        - PhpBrowser
-        - WebHelper
-    config:
-        PhpBrowser:
-            url: 'http://bat.dev/'
+   enabled: [WebDriver]
+   config:
+      WebDriver:
+         url: 'http://bat.dev/'
+         browser: chrome
+         wait: 10
+         capabilities:
+             unexpectedAlertBehaviour: 'accept'
