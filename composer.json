@@ -27,7 +27,9 @@
 	},
 	"scripts": {
 		"post-install-cmd": [
-			"php artisan config:publish codesleeve/asset-pipeline"
+			"php artisan optimize",
+			"php artisan debugbar:publish",
+			"bower install"
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",
