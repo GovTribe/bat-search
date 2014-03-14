@@ -4,6 +4,7 @@ node_js:
 php:
   - 5.5
 before_script:
+  - chmod -R 777 app/tests/_log
   - npm install -g bower
   - composer self-update
   - composer install --prefer-source --no-interaction --dev

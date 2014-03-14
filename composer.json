@@ -35,7 +35,7 @@
 			"php artisan clear-compiled",
 			"php artisan optimize",
 			"php artisan debugbar:publish",
-			"bower install"
+			"bower install -f"
 		],
 		"post-create-project-cmd": [
 			"php artisan key:generate"
