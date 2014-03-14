@@ -2341,12 +2341,12 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * If the window has no name, the only way to access it is via the `executeInSelenium()` method like so:
      *
-     * ``` php
+     * ```
      * <?php
      * $I->executeInSelenium(function (\Webdriver $webdriver) {
-     *      $handles=$webdriver->getWindowHandles();
+     *      $handles=$webDriver->getWindowHandles();
      *      $last_window = end($handles);
-     *      $webdriver->switchTo()->window($last_window);
+     *      $webDriver->switchTo()->window($name);
      * });
      * ?>
      * ```
