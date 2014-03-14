@@ -1,6 +1,5 @@
 /app/config/elastica.php
 /app/config/gtapi.php
-/app/tests/_log/
 /app/assets/components
 /bootstrap/compiled.php
 /vendor
