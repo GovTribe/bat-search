@@ -4,7 +4,7 @@ $I = new WebGuy($scenario);
 $I->amOnPage('/');
 $I->wantTo('perform a search');
 $I->submitForm('#big-search', array('query' => 'UAV'));
-$I->waitForJS("return $.active == 0;", 60);
+$I->waitForElementVisible('//*[@id="results"]', 30); // secs
 
 // Results are displayed.
 $I->see('Department of the Air Force');
@@ -18,7 +18,7 @@ $I->seeElement('#facets-list');
 //Project details.
 $I->seeLink('Details');
 $I->click('Details');
-$I->waitForJS("return $.active == 0;", 60);
+$I->waitForElementVisible('//*[@id="myModal"]/div/div/div[2]', 30); // secs
 $I->see('Last Updated');
 $I->see('2013-Dec-05');
 $I->see('Source');
@@ -26,17 +26,17 @@ $I->seeLink('FedBizOps.gov');
 $I->see('Goods or Services');
 $I->see('Goods');
 $I->click('Close');
-$I->waitForJS("return $.active == 0;", 60);
+$I->waitForElementNotVisible('#myModal', 30); // secs
 
 //POC
 $I->seeLink('Monica Payton');
 $I->click('Monica Payton');
-$I->waitForJS("return $.active == 0;", 60);
+$I->waitForElementVisible('//*[@id="myModal"]/div/div/div[2]', 30); // secs
 $I->see('Email');
-$I->see('monica.payton@us.mil');
+$I->seeLink('monica.payton@us.mil');
 $I->see('Agency');
 $I->see('Department of the Air Force');
 $I->see('Office');
 $I->see('Air Force Materiel Command');
 $I->click('Close');
-$I->waitForJS("return $.active == 0;", 60);
+$I->waitForElementNotVisible('#myModal', 30); // secs

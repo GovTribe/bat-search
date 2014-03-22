@@ -1,4 +1,4 @@
-<div class="list-group list-group-facets" id="facets-list">
+<div class="list-group list-group-facets hidden" id="facets-list">
 @if (isset($facets))
 	@foreach ($facets as $type => $data)
 		@if (!empty($data))
@@ -8,7 +8,12 @@
 				</div>
 				<div class="list-group">
 				@foreach ($data as $name => $count)
-						<a href="#" id={{ str_replace(' ', '-', $type.'xxx'.$name) }} class="list-group-item">
+						<?php $facetId = str_replace(' ', '-', $type.'xxx'.$name); ?>
+						@if ($facetId === $activeFacet)
+						<a href="#" id={{ $facetId }} class="list-group-item facet-link active">
+						@else
+						<a href="#" id={{ $facetId }} class="list-group-item facet-link">
+						@endif
 						<span class="badge pull-left" style="margin-right:16px">
 						{{$count}}
 						</span>

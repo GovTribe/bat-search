@@ -5,7 +5,7 @@
 <?= stylesheet_link_tag() ?>
 </head>	
 	<body>
-		<div class="container-fluid">
+		<div class="container-fluid" id="appWindow">
 			@yield('content')
 			@include('modal')
 		</div>

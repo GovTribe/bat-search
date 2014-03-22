@@ -159,7 +159,7 @@ class Search
 			}
 			else
 			{
-				$queryFacet->setField('status');
+				$queryFacet->setField($path);
 			}
 
 			$query->addFacet($queryFacet);

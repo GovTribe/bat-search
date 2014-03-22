@@ -18,13 +18,26 @@
 			<dt>Set-Aside Type</dt>
 			<dd>{{$entity['setAsideType']}}</dd>
 		@endif
+		@if (!empty($entity['contractNumbers']))
+			<dt>Contract Number</dt>
+			<dd>{{$entity['contractNumbers'][0]}}</dd>
+		@endif
+		@if (!empty($entity['solicitationNumbers']))
+			<dt>Solicitation Number</dt>
+			<dd>{{$entity['solicitationNumbers'][0]}}</dd>
+		@endif
+		@if ($entity['POPs'])
+			<dt>Place of Performance</dt>
+			<dd>{{ $entity['POPs'] }}</dd>
+		@endif
+
 	</dl>
 	@if (!empty($entity['files']))
 		<table class="table table-bordered modal-table">
 		  <thead>
 		    <tr>
 		      <th>Description</th>
-		      <th>Download</th>
+		      <th></th>
 		    </tr>
 		  </thead>
 		  <tbody>

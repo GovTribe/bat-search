@@ -15,135 +15,105 @@
 //= require ../components/spin.js/spin.js
 //= require ../components/spin.js/jquery.spin.js
 //= require_tree .
-var frm = $('#big-search');
-$('#big-search').submit(function (ev) {
-	frm.find('input[name="facet"]').val('');
-						
-						var opts = {
-						lines: 13, // The number of lines to draw
-						length: 20, // The length of each line
-						width: 10, // The line thickness
-						radius: 30, // The radius of the inner circle
-						corners: 1, // Corner roundness (0..1)
-						rotate: 0, // The rotation offset
-						direction: 1, // 1: clockwise, -1: counterclockwise
-						color: '#000', // #rgb or #rrggbb or array of colors
-						speed: 1, // Rounds per second
-						trail: 60, // Afterglow percentage
-						shadow: false, // Whether to render a shadow
-						hwaccel: false, // Whether to use hardware acceleration
-						className: 'spinner', // The CSS class to assign to the spinner
-						zIndex: 2e9, // The z-index (defaults to 2000000000)
-						top: '200', // Top position relative to parent in px
-						left: 'auto' // Left position relative to parent in px
-						};
-						var target = document.getElementById('results-row');
-						var spinner = new Spinner(opts).spin(target);
-						
-	
-	$.ajax({
-		type: frm.attr('method'),
-		url: frm.attr('action'),
-		data: frm.serialize(),
-		dataType: "json",
-		success: function (data) {
-			spinner.stop();
 
+$(document).ready(function(event) {
 
-			
-			$( ".results" ).replaceWith(data.results);
-			$( ".list-group-facets" ).replaceWith(data.facets);
-		   
+  var frm = $('#big-search');
 
-			$('#results').on('click', 'a', function(event){
-				        event.preventDefault()
-				        $('#myModal').removeData("modal")
-				        $('#myModal').modal({remote: $(this).attr("href")})
-			});
-		   
-		   $('#myModal').on('hidden.bs.modal', function () {
-				$(this).removeData("bs.modal")
-			})
-			
-			$('#facets-list').on('click', 'a', function(){
+  frm.submit(function(event) {
 
-				var addActive = true
-				var classList =$(this).attr('class').split(/\s+/);
-				$.each( classList, function(index, item){
-				    console.log(item);
-					if (item === 'active') {
-				      	addActive = false;
-				    }
-				});
+    event.preventDefault();
 
-				$('#facets-list').children().has("a").each(function(){
-					$(this).children().each(function(){
-						$(this).children().each(function(){
-							$(this).removeClass("active");
-						});
-					});
-				});
+    submitSearchForm(frm);
 
+  });
 
-				if (addActive) {
-					$(this).addClass("active");
-				}
-				
-				var clickedFacetValue = $(this).attr("id");
-				var currentFacetValue = frm.find('input[name="facet"]').val();
-				if (clickedFacetValue === currentFacetValue) {
-					console.log('Reset to base query');
-					frm.find('input[name="facet"]').val('');
-				} else {
-					frm.find('input[name="facet"]').val(clickedFacetValue);
-				}
-								 
-				var opts = {
-				lines: 13, // The number of lines to draw
-				length: 20, // The length of each line
-				width: 10, // The line thickness
-				radius: 30, // The radius of the inner circle
-				corners: 1, // Corner roundness (0..1)
-				rotate: 0, // The rotation offset
-				direction: 1, // 1: clockwise, -1: counterclockwise
-				color: '#000', // #rgb or #rrggbb or array of colors
-				speed: 1, // Rounds per second
-				trail: 60, // Afterglow percentage
-				shadow: false, // Whether to render a shadow
-				hwaccel: false, // Whether to use hardware acceleration
-				className: 'spinner', // The CSS class to assign to the spinner
-				zIndex: 2e9, // The z-index (defaults to 2000000000)
-				top: '200', // Top position relative to parent in px
-				left: 'auto' // Left position relative to parent in px
-				};
-				var target = document.getElementById('results-row');
-				var spinner = new Spinner(opts).spin(target);
-								 
-								 
-								 $.ajax({
-										type: frm.attr('method'),
-										url: frm.attr('action'),
-										data: frm.serialize(),
-										dataType: "json",
-										success: function (data) {
-											spinner.stop();
-											$( ".results" ).replaceWith(data.results);
-										
-											$('#results').on('click', 'a', function(event){
-				        						event.preventDefault()
-				        						$('#myModal').removeData("modal")
-				        						$('#myModal').modal({remote: $(this).attr("href")})
-												});
-		   
-		  									 $('#myModal').on('hidden.bs.modal', function () {
-											$(this).removeData("bs.modal")
-											})
+  $(document).on('click', "#reset", function(event) {
 
-										}
-								});
-				
-				});
-			}
-	});
-	ev.preventDefault();
+    reset();
+
+  });  
+
+  $(document).on('click', "#entityDetailLink", function(event) {
+
+    event.preventDefault();
+    $('#myModal').clone().attr('id','myModalDefault').appendTo('#appWindow');
+    $('#myModal').modal({remote: $(this).attr("href")});
+
+  });
+
+  $(document).on('hidden.bs.modal', function (event) {
+
+      $('#myModal').remove();
+      $('#myModalDefault').attr('id','myModal');
+
+  });
+
+  $('body').delegate( 'a.facet-link', 'click', function(event) {
+
+    if ($(this).hasClass('active')) {
+      $(this).removeClass('active');
+      $("#facet").val('');
+    }
+    else {
+      $(".facet-link").removeClass("active");
+      $(this).addClass("active");
+      $("#facet").val($(this).attr("id"));
+    }
+
+    submitSearchForm(frm);
+
+  });
 });
+
+var submitSearchForm = function(frm) {
+
+  $( "#results" ).empty();
+
+  var opts = {
+    lines: 13, // The number of lines to draw
+    length: 20, // The length of each line
+    width: 10, // The line thickness
+    radius: 30, // The radius of the inner circle
+    corners: 1, // Corner roundness (0..1)
+    top: '150', // Top position relative to parent in px
+  };
+  var target = document.getElementById('resultsSpinner');
+  var spinner = new Spinner(opts).spin(target);
+
+  $.ajax({
+    type: frm.attr('method'),
+    url: frm.attr('action'),
+    data: frm.serialize(),
+    dataType: "json",
+    context: this
+  })
+    // using the done promise callback
+    .done(function(data) {
+
+      var results = data.results;
+      var facets = data.facets;
+
+      $( ".results" ).replaceWith(results);
+      $( ".list-group-facets" ).replaceWith(facets);
+
+      spinner.stop();
+
+      $( ".results" ).removeClass('hidden');
+      $( ".list-group-facets" ).removeClass('hidden');
+    })
+
+    .fail(function(data) {
+      console.log(data);
+    });
+};
+
+
+var reset = function() {
+
+    $( "#results" ).empty();
+    $( "#facets-list" ).empty();
+    $( "#facet" ).val('');
+    $( "#search-query" ).val('');
+
+};
