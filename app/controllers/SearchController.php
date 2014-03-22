@@ -23,7 +23,7 @@ class SearchController extends BaseController {
 				'synopsis' => 'No synopsis.',
 				'setAsideType' => 'N/A',
 				'awardValue' => 'N/A', 
-				//'goodsOrServices' => 'goods', 
+				'goodsOrServices' => 'goods', 
 				'people' => array(),
 				'vendors' => array(), 
 				'agencies' => array(), 
