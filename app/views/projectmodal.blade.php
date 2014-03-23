@@ -30,7 +30,10 @@
 			<dt>Place of Performance</dt>
 			<dd>{{ $entity['POPs'] }}</dd>
 		@endif
-
+		@if (isset($entity['contractingOfficeAddress']))
+			<dt>Contracting Office Address</dt>
+			<dd>{{ $entity['contractingOfficeAddress'] }}</dd>
+		@endif
 	</dl>
 	@if (!empty($entity['files']))
 		<table class="table table-bordered modal-table">
