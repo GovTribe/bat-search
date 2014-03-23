@@ -20,7 +20,7 @@ $(document).ready(function(event) {
 
   var frm = $('#big-search');
 
-  // Main form submit event.
+  // Main search form submit event.
   frm.submit(function(event) {
 
     event.preventDefault();
@@ -34,7 +34,7 @@ $(document).ready(function(event) {
     reset();
   });
 
-  // Modal entity detail buttons.
+  // Modal entity detail button.
   $(document).on('click', "#entityDetailLink", function(event) {
 
     event.preventDefault();
@@ -53,21 +53,34 @@ $(document).ready(function(event) {
   // Facet link clicks.
   $('body').delegate( 'a.facet-link', 'click', function(event) {
 
+    var facets = JSON.parse($("#facet").val());
+
+    // Remove facet.
     if ($(this).hasClass('active')) {
+
       $(this).removeClass('active');
-      $("#facet").val('');
+
+      var index = $.inArray($(this).attr("facet-id"), facets);
+      if (index>=0) facets.splice(index, 1);
+
     }
+    // Add new facet.
     else {
-      $(".facet-link").removeClass("active");
+
       $(this).addClass("active");
-      $("#facet").val($(this).attr("id"));
+
+      facets.push($(this).attr("facet-id"));
     }
+
+    $("#facet").val(JSON.stringify(facets));
 
     // Reset results page to 0.
     $("#from").val( 0 );
 
-    // Remove pagination links.
+    // // Remove pagination links.
     $( ".pagination" ).empty();
+
+    $('html, body').animate({scrollTop:0}, 300);
 
     submitSearchForm(frm);
   });
@@ -79,9 +92,16 @@ $(document).ready(function(event) {
 
     $(".pagination li").removeClass("active");
 
-    $(this).closest("li").addClass("active");
+    var targetLinks = $('a[href="' + event.target + '"]');
+
+    $( targetLinks ).each(function( index ) {
+      if( $.isNumeric($( this ).text())) {
+        $( this ).parent().addClass("active");
+      }
+    });
 
     var pageNumber = event.target.search.replace(/^.*?\=/, '');
+    
     $("#from").val( pageNumber );
     submitSearchForm(frm);
 
@@ -106,6 +126,9 @@ var submitSearchForm = function(frm) {
   var target = document.getElementById('resultsSpinner');
   var spinner = new Spinner(opts).spin(target);
 
+  $( "#searchSubmit" ).addClass("disabled");
+  $( "#reset" ).addClass("disabled");
+
   $.ajax({
     type: frm.attr('method'),
     url: frm.attr('action'),
@@ -129,6 +152,9 @@ var submitSearchForm = function(frm) {
       $( ".results" ).removeClass('hidden');
       $( ".list-group-facets" ).removeClass('hidden');
       $( ".links" ).removeClass('hidden');
+      $( "#searchSubmit" ).removeClass("disabled");
+      $( "#reset" ).removeClass("disabled");
+      
     })
 
     .fail(function(data) {
@@ -143,7 +169,7 @@ var reset = function() {
     $( "#facets-list" ).empty();
     $( ".pagination" ).empty();
 
-    $( "#facet" ).val('');
+    $( "#facet" ).val('[]');
     $( "#search-query" ).val('');
     $( "#from" ).val(0);
 };

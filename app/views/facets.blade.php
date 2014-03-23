@@ -8,12 +8,11 @@
 				</div>
 				<div class="list-group">
 				@foreach ($data as $name => $count)
-						<?php $facetId = str_replace(' ', '-', $type.'xxx'.$name); ?>
-						@if ($facetId === $activeFacet)
-						<a href="#" id={{ $facetId }} class="list-group-item facet-link active">
-						@else
-						<a href="#" id={{ $facetId }} class="list-group-item facet-link">
-						@endif
+						<?php 
+							$facetId = base64_encode($type . ':' . $name); 
+							$active = in_array($facetId, $activeFacets) ? 'active' : null;
+						?>
+						<a href="#" class="list-group-item facet-link {{ $active }}" facet-id="{{ $facetId }}">
 						<span class="badge pull-left" style="margin-right:16px">
 						{{$count}}
 						</span>
@@ -21,7 +20,7 @@
 						</a>
 				@endforeach
 				</div>
-			</div>				
+			</div>
 		@endif
 	@endforeach
 @endif

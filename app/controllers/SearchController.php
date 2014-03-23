@@ -23,7 +23,7 @@ class SearchController extends BaseController {
 				'synopsis' => 'No synopsis.',
 				'setAsideType' => 'N/A',
 				'awardValue' => 'N/A', 
-				'goodsOrServices' => 'goods', 
+				'goodsOrServices' => 'Not Listed', 
 				'people' => array(),
 				'vendors' => array(), 
 				'agencies' => array(), 
@@ -46,8 +46,12 @@ class SearchController extends BaseController {
 		$params['from'] = Input::get('from');
 		$params['size'] = Input::get('size');
 
+		// Decode any user-supplied filter facets.
+		$rawFilterFacets = json_decode(Input::get('facets'), true);
+		$filterFacets = $this->decodeFilterFacets($rawFilterFacets);
+
 		// Execute the search
-		$result = Search::doBATQuery(Input::get('query'), Input::get('facet'), $params);
+		$result = Search::doBATQuery(Input::get('query'), $filterFacets, $params);
 		
 		// Get hits
 		$hits = $this->formatResults($result->getResults(), $params['fields']);
@@ -60,7 +64,7 @@ class SearchController extends BaseController {
 		$paginator = Paginator::make($hits, $result->getTotalHits(), $params['size']);
 
 		return Response::json(array(
-			'facets' => (string) View::make('facets', array('facets' => $facets, 'activeFacet' => Input::get('facet'))),
+			'facets' => (string) View::make('facets', array('facets' => $facets, 'activeFacets' => $rawFilterFacets)),
 			'results' => (string) View::make('results')->withHits($paginator),
 			'links' => (string) $paginator->links()
 		));
@@ -126,10 +130,32 @@ class SearchController extends BaseController {
 
 		foreach ($facets as $facetName => $facetItems)
 		{
-			foreach ($facetItems['terms'] as $facetItem) $formatted[$facetName][$facetItem['term']] = $facetItem['count'];
+			
+			foreach ($facetItems['terms'] as $facetItem)
+			{
+				$formatted[$facetName][$facetItem['term']] = $facetItem['count'];
+			}
 		}
 
 		return $formatted;
 	}
 
+	/**
+	 * Decode filter facets.
+	 *
+	 * @param  array $rawFilterFacets
+	 * @return array
+	 */
+	protected function decodeFilterFacets(array $rawFilterFacets)
+	{
+		if (!$rawFilterFacets) return array();
+
+		foreach ($rawFilterFacets as &$facet)
+		{
+			$facet = explode(':', base64_decode($facet));
+			$facet = array('type' => $facet[0], 'name' => $facet[1]);
+		}
+
+		return $rawFilterFacets;
+	}
 }
