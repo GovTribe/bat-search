@@ -18,7 +18,7 @@
 	width: 500px;
  }
 
- .pagehead {
+ #pagehead {
  	padding-top: 20px;
 }
 
@@ -26,7 +26,6 @@
     float: none;
 }
 
-#map-canvas {
-	width:100%;
- 	height:100%;
+.pagination {
+	padding-left: inherit;
 }

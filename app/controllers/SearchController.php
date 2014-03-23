@@ -39,10 +39,12 @@ class SearchController extends BaseController {
 					array('path' => 'status', 'label' => 'Status', 'limit' => 5, 'order' => 2),
 					array('path' => 'goodsOrServices', 'label' => 'Goods Or Services', 'limit' => 2, 'order' => 7),
 					array('path' => 'setAsideType', 'label' => 'Set-Aside Type', 'limit' => 5, 'order' => 5),
-
-
 				)
 			);
+
+		// Set the from / size parameters to control pagination
+		$params['from'] = Input::get('from');
+		$params['size'] = Input::get('size');
 
 		// Execute the search
 		$result = Search::doBATQuery(Input::get('query'), Input::get('facet'), $params);
@@ -52,10 +54,15 @@ class SearchController extends BaseController {
 
 		// Get facets
 		$facets = $this->formatFacets($result->getFacets(), $params['queryFacets']);
-		
+
+		// Setup pagination
+		Paginator::setCurrentPage( $params['from'] );
+		$paginator = Paginator::make($hits, $result->getTotalHits(), $params['size']);
+
 		return Response::json(array(
 			'facets' => (string) View::make('facets', array('facets' => $facets, 'activeFacet' => Input::get('facet'))),
-			'results' => (string) View::make('results')->withHits($hits)
+			'results' => (string) View::make('results')->withHits($paginator),
+			'links' => (string) $paginator->links()
 		));
 	}
 

@@ -90,12 +90,13 @@ class Search
 	 */
 	public function doBATQuery($searchString, $filterFacet, array $params)
 	{
-		// Get $fields, $indexName, $queryFacets from $params.
+		// Get $fields, $indexName, $queryFacets, $size and $from from $params.
 		extract($params);
 
 		// The base query.
 		$query = new Query;
-		$query->setSize(50);
+		$query->setSize($size);
+		$query->setFrom($from);
 		$query->setFields(array_keys($fields));
 
 		// The base query's facets.
