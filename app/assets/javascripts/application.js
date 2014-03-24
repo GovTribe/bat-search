@@ -128,6 +128,7 @@ var submitSearchForm = function(frm) {
 
   $( "#searchSubmit" ).addClass("disabled");
   $( "#reset" ).addClass("disabled");
+  $(".links-bottom").addClass("hidden");
 
   $.ajax({
     type: frm.attr('method'),
@@ -152,9 +153,11 @@ var submitSearchForm = function(frm) {
       $( ".results" ).removeClass('hidden');
       $( ".list-group-facets" ).removeClass('hidden');
       $( ".links" ).removeClass('hidden');
+
       $( "#searchSubmit" ).removeClass("disabled");
       $( "#reset" ).removeClass("disabled");
-      
+      $(".links-bottom").removeClass("hidden");
+
     })
 
     .fail(function(data) {

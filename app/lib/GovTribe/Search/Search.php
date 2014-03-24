@@ -99,19 +99,19 @@ class Search
 		$query->setFrom($from);
 		$query->setFields(array_keys($fields));
 
-		// The base query's facets.
-		$query = $this->applyQueryFacets($query, $queryFacets);
-
 		// The base query's filter.
 		$boolAndFilter = new \Elastica\Filter\BoolAnd;
 
-		// Filter the query to only display projects.
+		// Add a filter to only display projects to $boolAndFilter.
 		$typeFilter = new \Elastica\Filter\Type;
 		$typeFilter->setType('Project');
 		$boolAndFilter->addFilter($typeFilter);
 
-		// Apply any user provided filter facets to the query's $boolAndFilter.
-		if (!empty($filterFacets)) $this->applyFilterFacet($boolAndFilter, $filterFacets, $queryFacets);
+		// Apply any user provided filter facets to the$boolAndFilter.
+		if (!empty($filterFacets)) $this->applyFilterFacets($boolAndFilter, $filterFacets, $queryFacets);
+
+		// The base query's facets.
+		$this->applyQueryFacets($query, $queryFacets);
 		
 		// Setup the actual query.
 		$multiMatch = new MultiMatch();
@@ -124,11 +124,8 @@ class Search
 			'synopsis',
 		));
 
-		// Apply the query.
-		$query->setQuery($multiMatch);
-
-		// Apply the filter.	
-		$query->setFilter($boolAndFilter);
+		$filtered = new Elastica\Query\Filtered($multiMatch, $boolAndFilter);
+		$query->setQuery($filtered);
 
 		return $this->getIndex($indexName)->search($query);
 	}
@@ -138,7 +135,7 @@ class Search
 	 *
 	 * @param  Elastica\Query $query
 	 * @param  array $queryFacets
-	 * @return object
+	 * @return void
 	 */
 	protected function applyQueryFacets(Elastica\Query $query, array $queryFacets)
 	{
@@ -165,8 +162,6 @@ class Search
 
 			$query->addFacet($queryFacet);
 		}
-
-		return $query;
 	}
 
 	/**
@@ -175,10 +170,12 @@ class Search
 	 * @param  Elastica\Filter\BoolAnd $boolAnd
 	 * @param  array $filterFacets
 	 * @param  array $queryFacets
-	 * @return object
+	 * @return void
 	 */
-	protected function applyFilterFacet(\Elastica\Filter\BoolAnd $boolAndFilter, array $filterFacets, array $queryFacets)
+	protected function applyFilterFacets(\Elastica\Filter\BoolAnd $boolAndFilter, array $filterFacets, array $queryFacets)
 	{
+		if (empty($filterFacets)) return;
+
 		$facetsToApply = array();
 
 		// Lookup the description for the facets the user selected.
@@ -211,8 +208,6 @@ class Search
 			}
 			else $boolAndFilter->addFilter($termFilter);
 		}
-
-		return $boolAndFilter;
 	}
 
 }
