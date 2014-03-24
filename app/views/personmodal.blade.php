@@ -4,7 +4,6 @@
 </div>
 <div class="modal-body">
 	<dl class="dl-horizontal">
-		@if ($entity['type'] === 'person')
 			<dt>Email</dt>
 			<dd>{{ HTML::mailto($entity['mail'], $title = null, $attributes = array()) }}</dd>
 			@if (isset($entity['phoneNumber']))
@@ -19,7 +18,6 @@
 			<dd>{{ $entity['agencies'][0]['name'] }}</dd>
 			<dt>Office</dt>
 			<dd>{{ $entity['offices'][0]['name'] }}</dd>
-		@endif
 	</dl>
 </div>
 <div class="modal-footer">

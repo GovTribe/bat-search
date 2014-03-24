@@ -31,8 +31,10 @@ class EntityController extends BaseController {
 			$entity = $this->formatProjectEntity($entity);
 			return View::make('projectmodal')->withEntity($entity);
 		}
-
-		return View::make('entitymodal')->withEntity($entity);
+		elseif ($type === 'person')
+		{
+			return View::make('personmodal')->withEntity($entity);
+		}
 	}
 
 	/**

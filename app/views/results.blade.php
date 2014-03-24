@@ -31,7 +31,7 @@
 							@if (!empty($hit['vendors']))
 								<div class="list-group">
 									@foreach ($hit['vendors'] as $vendor)
-									<a href={{'getModal/'. $vendor['type'] . '/' . $vendor['_id']}} class="modal-link list-group-item" id="entityDetailLink" style="border-style:none">{{ $vendor['name'] }}</a>
+									<p class="list-group-item" style="border-style:none">{{ $vendor['name'] }}</p>
 									@endforeach
 								</div>
 							@else
