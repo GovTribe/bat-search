@@ -12,8 +12,8 @@
 					</div>
 					<div class="col-md-10">
 						<a href={{'getModal/project/' . $hit['_id'] }} class="btn btn-info btn-sm pull-right" id="entityDetailLink">Details</a>
-						<h2>{{ $hit['name'] }} <small>{{ $hit['status'] }}</small></h2>
-						<p class="lead">{{ $hit['agencies'][0]['name'] }}</p>
+						<h2>{{ $hit['name'] }} <small>{{ $hit['status'] }} </small></h2>
+						<p class="lead">{{ $hit['agencies'][0]['name'] }} <small style="font-size: .7em;">{{ Carbon\Carbon::createFromFormat('Y-m-d', $hit['timestamp'])->diffForHumans() }}</small></p>
 					</div>
 				</div>
 				<div class="row" style="padding:10px;">

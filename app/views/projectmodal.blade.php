@@ -12,7 +12,8 @@
 		<dd>{{ $entity['goodsOrServices'] }}</dd>
 		@if ($entity['awardValueNumeric'])
 			<dt>Award Value</dt>
-			<dd>{{ money_format('$%i', $entity['awardValueNumeric']) }}</dd>
+			<?php setlocale(LC_MONETARY, 'en_US'); ?>
+			<dd>{{ money_format('%(#10n', $entity['awardValueNumeric']) }}</dd>
 		@endif
 		@if ($entity['setAsideType'])
 			<dt>Set-Aside Type</dt>
@@ -31,7 +32,7 @@
 			<dd>{{ $entity['POPs'] }}</dd>
 		@endif
 		@if (isset($entity['contractingOfficeAddress']))
-			<dt>Contracting Office Address</dt>
+			<dt>Contracting Office</dt>
 			<dd>{{ $entity['contractingOfficeAddress'] }}</dd>
 		@endif
 	</dl>

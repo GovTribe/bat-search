@@ -94,10 +94,11 @@ class Search
 		extract($params);
 
 		// The base query.
-		$query = new Query;
+		$query = new Elastica\Query;
 		$query->setSize($size);
 		$query->setFrom($from);
 		$query->setFields(array_keys($fields));
+		$boolQuery = new \Elastica\Query\Bool;
 
 		// The base query's filter.
 		$boolAndFilter = new \Elastica\Filter\BoolAnd;
@@ -114,18 +115,31 @@ class Search
 		$this->applyQueryFacets($query, $queryFacets);
 		
 		// Setup the actual query.
+		$functionScoreQuery = new Elastica\Query\FunctionScore;
+		$functionScoreQuery->setScoreMode('avg');
+		$functionScoreQuery->setMaxBoost(1);
+
 		$multiMatch = new MultiMatch();
 		$multiMatch->setQuery($searchString);
 		$multiMatch->setFields(array(
 			'name.full^3',
-			'name.front^2',
+			'name.front',
 			'name.middle',
 			'name.back',
 			'synopsis',
 		));
 
-		$filtered = new Elastica\Query\Filtered($multiMatch, $boolAndFilter);
-		$query->setQuery($filtered);
+		$functionScoreQuery->setQuery($multiMatch);
+
+		$functionScoreQuery->addDecayFunction('gauss', 'timestamp', date('Y-m-d'), '180d', '180d', 0.2);
+
+		$boostAwarded = new Elastica\Query\Terms('status', array('Award Notice'));
+		$boolQuery->addShould($boostAwarded);
+
+		$filteredQuery = new Elastica\Query\Filtered($functionScoreQuery, $boolAndFilter);
+		$boolQuery->addMust($filteredQuery);
+
+		$query->setQuery($boolQuery);
 
 		return $this->getIndex($indexName)->search($query);
 	}

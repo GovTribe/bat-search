@@ -161,12 +161,16 @@ var submitSearchForm = function(frm) {
     })
 
     .fail(function(data) {
-      console.log(data);
+      spinner.stop();
+      reset();
     });
 };
 
 
 var reset = function() {
+
+    $( "#searchSubmit" ).removeClass("disabled");
+    $( "#reset" ).removeClass("disabled");
 
     $( "#results" ).empty();
     $( "#facets-list" ).empty();
