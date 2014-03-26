@@ -149,6 +149,7 @@ var submitSearchForm = function(frm) {
       $( ".pagination" ).replaceWith(links);
 
       spinner.stop();
+      $('#resultsSpinner').remove();
 
       $( ".results" ).removeClass('hidden');
       $( ".list-group-facets" ).removeClass('hidden');
@@ -162,6 +163,7 @@ var submitSearchForm = function(frm) {
 
     .fail(function(data) {
       spinner.stop();
+      $('#resultsSpinner').remove();
       reset();
     });
 };
