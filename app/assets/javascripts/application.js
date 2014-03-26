@@ -128,7 +128,6 @@ var submitSearchForm = function(frm) {
 
   $( "#searchSubmit" ).addClass("disabled");
   $( "#reset" ).addClass("disabled");
-  $(".links-bottom").addClass("hidden");
 
   $.ajax({
     type: frm.attr('method'),
@@ -146,9 +145,16 @@ var submitSearchForm = function(frm) {
 
       $( ".results" ).replaceWith(results);
       $( ".list-group-facets" ).replaceWith(facets);
-      $( ".pagination" ).replaceWith(links);
+
+      if (links) {
+        $( ".pagination" ).replaceWith(links);
+      }
+      else {
+        $( ".pagination" ).empty();
+      }
 
       spinner.stop();
+
       $('#resultsSpinner').remove();
 
       $( ".results" ).removeClass('hidden');
@@ -157,7 +163,6 @@ var submitSearchForm = function(frm) {
 
       $( "#searchSubmit" ).removeClass("disabled");
       $( "#reset" ).removeClass("disabled");
-      $(".links-bottom").removeClass("hidden");
 
     })
 
