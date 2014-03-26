@@ -10,10 +10,9 @@
 		<dd><a href={{ $entity['sourceLink'] }} target="_blank">FedBizOps.gov</a></dd>
 		<dt>Goods or Services</dt>
 		<dd>{{ $entity['goodsOrServices'] }}</dd>
-		@if ($entity['awardValueNumeric'])
+		@if ($entity['awardValue'])
 			<dt>Award Value</dt>
-			<?php setlocale(LC_MONETARY, 'en_US'); ?>
-			<dd>{{ money_format('%(#10n', $entity['awardValueNumeric']) }}</dd>
+			<dd>{{ $entity['awardValue'] }}</dd>
 		@endif
 		@if ($entity['setAsideType'])
 			<dt>Set-Aside Type</dt>
