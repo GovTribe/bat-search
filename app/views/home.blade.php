@@ -15,7 +15,6 @@
 </div>
 <hr>
 <div class="row" style="padding:20px;">
-	<span id="number-of-results"></span>
 	<div class="col-md-8">
 		@include('results')
 	</div>
