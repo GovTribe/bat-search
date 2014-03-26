@@ -10,7 +10,7 @@
 		<dd><a href={{ $entity['sourceLink'] }} target="_blank">FedBizOps.gov</a></dd>
 		<dt>Goods or Services</dt>
 		<dd>{{ $entity['goodsOrServices'] }}</dd>
-		@if ($entity['awardValue'])
+		@if (isset($entity['awardValue']))
 			<dt>Award Value</dt>
 			<dd>{{ $entity['awardValue'] }}</dd>
 		@endif
