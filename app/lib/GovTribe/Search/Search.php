@@ -2,6 +2,8 @@
 
 use Elastica;
 use Elastica\Query;
+use Elastica\Query\QueryString;
+use Elastica\Query\Fuzzy;
 use Elastica\Query\Builder;
 use Elastica\Query\Bool;
 use Elastica\Query\MultiMatch;
@@ -11,7 +13,6 @@ use Elastica\Query\Filtered;
 use Elastica\Facet;
 use Carbon;
 use Log;
-
 class Search
 {
 	/**
@@ -114,34 +115,37 @@ class Search
 		// The base query's facets.
 		$this->applyQueryFacets($query, $queryFacets);
 		
-		// Setup the actual query.
+		// Setup the actual query using a function score query
 		$functionScoreQuery = new Elastica\Query\FunctionScore;
 		$functionScoreQuery->setScoreMode('avg');
 		$functionScoreQuery->setMaxBoost(1);
 
-		$multiMatch = new MultiMatch();
-		$multiMatch->setQuery($searchString);
-		$multiMatch->setFields(array(
-			'name.full^3',
-			'name.front',
-			'name.middle',
-			'name.back',
+		// Set the function score query's query to a query string query
+		$qsQuery = new Elastica\Query\QueryString;
+		$qsQuery->setQuery($searchString);
+		$qsQuery->setDefaultField('name.full');
+		$qsQuery->setFields(array(
+			'name.full^2',
 			'synopsis',
 		));
+		$qsQuery->setDefaultOperator('and');
+		$qsQuery->setAnalyzeWildcard(true);
+		$qsQuery->setAutoGeneratePhraseQueries(true);
 
-		$functionScoreQuery->setQuery($multiMatch);
+		$functionScoreQuery->setQuery($qsQuery);
 
+		// Boot more recent items
 		$functionScoreQuery->addDecayFunction('gauss', 'timestamp', date('Y-m-d'), '180d', '180d', 0.2);
 
+		// Boost awarded items
 		$boostAwarded = new Elastica\Query\Terms('status', array('Award Notice'));
 		$boolQuery->addShould($boostAwarded);
 
+		// Build a filter query that combines the function score query and the query's bool and filter
 		$filteredQuery = new Elastica\Query\Filtered($functionScoreQuery, $boolAndFilter);
 		$boolQuery->addMust($filteredQuery);
 
-		$query->setQuery($boolQuery);
-
-		return $this->getIndex($indexName)->search($query);
+		return $this->getIndex($indexName)->search($query->setQuery($boolQuery));
 	}
 
 	/**
