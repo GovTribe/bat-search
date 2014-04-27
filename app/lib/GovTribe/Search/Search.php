@@ -94,6 +94,8 @@ class Search
 		// Get $fields, $indexName, $queryFacets, $size and $from from $params.
 		extract($params);
 
+		Log::info('Search::doBATQuery(): "' . $searchString . '"');
+
 		// The base query.
 		$query = new Elastica\Query;
 		$query->setSize($size);
@@ -128,9 +130,11 @@ class Search
 			'name.full^2',
 			'synopsis',
 		));
-		$qsQuery->setDefaultOperator('and');
+		$qsQuery->setDefaultOperator('AND');
 		$qsQuery->setAnalyzeWildcard(true);
 		$qsQuery->setAutoGeneratePhraseQueries(true);
+		$qsQuery->setFuzzyPrefixLength(3);
+		$qsQuery->setAnalyzer('standard');
 
 		$functionScoreQuery->setQuery($qsQuery);
 
