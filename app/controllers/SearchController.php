@@ -11,7 +11,7 @@ class SearchController extends BaseController {
 	{
 		// Setup the search parameters
 		$params = array(
-			'indexName' => 'entity-name',
+			'indexName' => 'project',
 			'fields' => array(
 				'_id'  => null,
 				'name' => 'Not Listed', 

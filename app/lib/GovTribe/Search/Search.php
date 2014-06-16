@@ -125,9 +125,9 @@ class Search
 		// Set the function score query's query to a query string query
 		$qsQuery = new Elastica\Query\QueryString;
 		$qsQuery->setQuery($searchString);
-		$qsQuery->setDefaultField('name.full');
+		$qsQuery->setDefaultField('name');
 		$qsQuery->setFields(array(
-			'name.full^2',
+			'name^2',
 			'synopsis',
 		));
 		$qsQuery->setDefaultOperator('AND');
