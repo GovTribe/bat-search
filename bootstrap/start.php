@@ -24,10 +24,11 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(function()
-{
-	if (str_contains(gethostname(), 'local')) return 'local';
-});
+$env = $app->detectEnvironment(array(
+
+    'local' => array('jtop.local'),
+
+));
 
 /*
 |--------------------------------------------------------------------------
